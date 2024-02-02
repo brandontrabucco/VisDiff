@@ -12,7 +12,7 @@ class GPTEvaluator:
     Ask GPT if the hypothesis is true or false.
     """
 
-    prompt = """I am a machine learning reseracher summarizing differences in groups of images. The goal is to find a concept that is more true for Group A than Group B.
+    prompt = """I am a machine learning researcher summarizing differences in groups of images. The goal is to find a concept that is more true for Group A than Group B.
 
 Given a description of Group A and Group B, output whether a given prediction aligns with the description of Group A. Answer with a 2 (fully aligned), 1 (somewhat aligned), or 0 (not aligned). a score of 1 should be given if the prediction is more true for A than B, but is a superset or a subset of the most correct difference.
 

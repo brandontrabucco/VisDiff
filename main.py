@@ -49,6 +49,9 @@ def load_data(args: Dict) -> Tuple[List[Dict], List[Dict], List[str]]:
     dataset2 = df[df["group_name"] == data_args["group2"]].to_dict("records")
     group_names = [data_args["group1"], data_args["group2"]]
 
+    dataset1 = list(sorted(dataset1, key=lambda x: x["path"]))
+    dataset2 = list(sorted(dataset2, key=lambda x: x["path"]))
+
     if data_args["purity"] < 1:
         logging.warning(f"Purity is set to {data_args['purity']}. Swapping groups.")
         assert len(dataset1) == len(dataset2), "Groups must be of equal size"

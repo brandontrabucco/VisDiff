@@ -29,8 +29,8 @@ class Proposer:
         all_images = []
         random.seed(self.args["seed"])
         for i in range(self.args["num_rounds"]):
-            sampled_dataset1 = self.sample(dataset1, self.args["num_samples"])
-            sampled_dataset2 = self.sample(dataset2, self.args["num_samples"])
+            sampled_dataset1, sampled_dataset2 = \
+                self.sample(dataset1, dataset2, self.args["num_samples"])
             hypotheses, logs = self.get_hypotheses(sampled_dataset1, sampled_dataset2)
             images = self.visualize(sampled_dataset1, sampled_dataset2)
             all_hypotheses += hypotheses
@@ -43,8 +43,11 @@ class Proposer:
     ) -> Tuple[List[str], Dict]:
         raise NotImplementedError
 
-    def sample(self, dataset: List[Dict], n: int) -> List[Dict]:
-        return random.sample(dataset, n)
+    def sample(self, dataset1: List[Dict], dataset2: List[Dict], n: int) -> List[Dict]:
+        if "zip_samples" in self.args and self.args["zip_samples"]:
+            print("zipping together datasets for sampling")
+            return zip(*random.sample(list(zip(dataset1, dataset2)), n))
+        return random.sample(dataset1, n), random.sample(dataset2, n)
 
     def visualize(
         self, sampled_dataset1: List[Dict], sampled_dataset2: List[Dict]
